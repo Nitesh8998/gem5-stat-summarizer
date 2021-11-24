@@ -13,7 +13,8 @@ def read_single_stat_file( file, config_name ):
         if len(line) < 1:
             continue
         line_content = line.split()
-        stat_dict[line_content[0]] = line_content[1]
+        if line_content[0] not in  stat_dict.keys():
+            stat_dict[line_content[0]] = line_content[1]
     file1.close()
     return stat_dict
 
@@ -35,6 +36,7 @@ def write_to_csv(file, data_dict):
 def filter_out_stats(original_dict):
     target_stats = read_file_line_by_line()
     target_stats.append('configuration')
+    #print(original_dict)
     filtered_dict = {k: v for (k, v) in original_dict.items() if k in target_stats}
     return filtered_dict
 
